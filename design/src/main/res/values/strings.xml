@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_tile_generic_sheet_content">Atenção</string>
+    <string name="text_first_button_generic_sheet_content">Ok, entendi</string>
+    <string name="text_second_button_generic_sheet_content">Tentar novamente</string>
+
+    <string name="text_first_button_not_confirmed_sheet_content">Validar cadastro</string>
+    <string name="text_second_button_not_confirmed_sheet_content">Agora não</string>
+
+    <string name="terms_prefix">Eu concordo com os </string>
+    <string name="terms_link">termos de uso</string>
+    <string name="terms_middle"> e a </string>
+    <string name="privacy_link">política de privacidade</string>
+    <string name="terms_error">Para continuar, precisamos que você aceite os nossos termos</string>
+
+    <string name="label_input_code_opt_text_field">Código</string>
+    <string name="message_code_invalid_opt_text_field">Código inválido</string>
+    <string name="label_resend_code_opt_text_field">Reenviar código</string>
+    <string name="label_counting_code_opt_text_field">Reenviar em %1$s</string>
+</resources>
+

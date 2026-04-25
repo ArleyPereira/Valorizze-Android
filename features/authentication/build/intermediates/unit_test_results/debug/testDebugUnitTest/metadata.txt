@@ -1,0 +1,4 @@
+modulePath=:features:authentication
+testedVariantName=debug
+testSuiteName=UnitTest
+testTarget=host

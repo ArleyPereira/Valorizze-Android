@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="app.valorizze.authentication.presenter.features.login.viewmodel.LoginViewModelTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-04-25T23:39:42.798Z" hostname="MacBook-Air-de-Arley.local" time="0.619">
+  <properties/>
+  <testcase name="changing password updates state password" classname="app.valorizze.authentication.presenter.features.login.viewmodel.LoginViewModelTest" time="0.507"/>
+  <testcase name="clicking login with empty email sets inputError EMAIL" classname="app.valorizze.authentication.presenter.features.login.viewmodel.LoginViewModelTest" time="0.077"/>
+  <testcase name="successful login saves user emits navigation and stops loading" classname="app.valorizze.authentication.presenter.features.login.viewmodel.LoginViewModelTest" time="0.02"/>
+  <testcase name="error login sets feedback and bottom sheet and stops loading" classname="app.valorizze.authentication.presenter.features.login.viewmodel.LoginViewModelTest" time="0.005"/>
+  <testcase name="changing email updates state email" classname="app.valorizze.authentication.presenter.features.login.viewmodel.LoginViewModelTest" time="0.003"/>
+  <testcase name="clicking login with empty password sets inputError PASSWORD" classname="app.valorizze.authentication.presenter.features.login.viewmodel.LoginViewModelTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+WARNING: A Java agent has been loaded dynamically (/Users/arley/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.15.11/a38b16385e867f59a641330f0362ebe742788ed8/byte-buddy-agent-1.15.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

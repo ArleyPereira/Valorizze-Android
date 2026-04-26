@@ -31,7 +31,7 @@ import org.junit.Test
 class LoginViewModelTest {
 
     @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
+    private val mainDispatcherRule = MainDispatcherRule()
 
     private val loginUseCase: LoginUseCase = mockk()
     private val localPreferences: LocalPreferences = mockk(relaxed = true)
@@ -75,8 +75,6 @@ class LoginViewModelTest {
     @Test
     fun `clicking login with empty email sets inputError EMAIL`() = runTest {
         // GIVEN
-        // (vm criado no @Before)
-        // email e password começam vazios por padrão
 
         // WHEN
         vm.dispatchAction(LoginAction.OnSignIn)
@@ -118,13 +116,12 @@ class LoginViewModelTest {
             data = user,
             message = null,
             action = null,
-            status = 200,
+            status = 200
         )
 
         vm.dispatchAction(LoginAction.OnValueChange("john.doe@example.com", EMAIL))
         vm.dispatchAction(LoginAction.OnValueChange("123456", PASSWORD))
 
-        // GIVEN (event collector ready)
         // IMPORTANT: o Channel é rendezvous; se ninguém estiver coletando,
         // o send() suspende e o ViewModel pode não chegar a setar isLoading = false.
         val navigationEvent = async {
@@ -134,27 +131,17 @@ class LoginViewModelTest {
         // WHEN
         vm.dispatchAction(LoginAction.OnSignIn)
 
-        // WHEN (run pending coroutines)
         advanceUntilIdle()
 
         // THEN
-        // Verify: chamou use case com DTO esperado
         coVerify(exactly = 1) {
-            loginUseCase(
-                LoginDTO(
-                    email = "john.doe@example.com",
-                    password = "123456",
-                )
-            )
+            loginUseCase(LoginDTO(email = "john.doe@example.com", password = "123456",))
         }
 
-        // THEN: persistiu usuário
         verify(exactly = 1) { localPreferences.saveUser(user) }
 
-        // THEN: emitiu evento de navegação (Channel -> Flow)
         navigationEvent.await()
 
-        // THEN: loading terminou
         assertFalse(vm.state.value.isLoading)
     }
 
@@ -175,7 +162,6 @@ class LoginViewModelTest {
         // WHEN
         vm.dispatchAction(LoginAction.OnSignIn)
 
-        // WHEN (run pending coroutines)
         advanceUntilIdle()
 
         // THEN
@@ -185,8 +171,8 @@ class LoginViewModelTest {
         assertTrue(state.feedback != null)
         assertTrue(state.sheetModel != null)
 
-        // THEN: não deve navegar nem salvar usuário no erro
         verify(exactly = 0) { localPreferences.saveUser(any()) }
     }
+
 }
 

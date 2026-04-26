@@ -37,15 +37,13 @@ class RecoverCodeViewModelTest {
 
     @Before
     fun setUp() {
-        val savedStateHandle = SavedStateHandle(
-            mapOf(
-                "email" to "dev.arley.santana@gmail.com",
-                "message" to "Código enviado"
-            )
-        )
         vm = RecoverCodeViewModel(
             validateConfirmationUseCase = validateConfirmationUseCase,
-            savedStateHandle = savedStateHandle
+            savedStateHandle = SavedStateHandle(
+                mapOf("email" to "dev.arley.santana@gmail.com",
+                    "message" to "Código enviado"
+                )
+            )
         )
     }
 

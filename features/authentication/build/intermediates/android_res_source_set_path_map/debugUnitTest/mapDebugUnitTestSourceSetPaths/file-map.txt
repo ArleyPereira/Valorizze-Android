@@ -1,4 +1,0 @@
-app.valorizze.authentication.test.authentication-mergeDebugUnitTestResources-0 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/features/authentication/build/intermediates/incremental/debugUnitTest/mergeDebugUnitTestResources/merged.dir
-app.valorizze.authentication.test.authentication-mergeDebugUnitTestResources-1 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/features/authentication/build/intermediates/incremental/debugUnitTest/mergeDebugUnitTestResources/stripped.dir
-app.valorizze.authentication.test.authentication-debugUnitTest-2 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/features/authentication/build/intermediates/merged_res/debugUnitTest/mergeDebugUnitTestResources
-gradleHome-0 /Users/arley/.gradle

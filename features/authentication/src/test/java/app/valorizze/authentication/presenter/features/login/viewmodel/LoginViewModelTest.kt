@@ -165,7 +165,7 @@ class LoginViewModelTest {
         advanceUntilIdle()
 
         // THEN
-        val state = vm.state.value
+        val state = vm.state.first { it.message == "Credenciais inválidas" }
         assertFalse(state.isLoading)
         assertEquals("Credenciais inválidas", state.message)
         assertTrue(state.feedback != null)

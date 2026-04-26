@@ -1,0 +1,9 @@
+app.valorizze.core-pngs-0 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/core/build/generated/res/pngs/debug
+app.valorizze.core-updated_navigation_xml-1 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/core/build/generated/updated_navigation_xml/debug
+app.valorizze.core-mergeDebugResources-2 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/core/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
+app.valorizze.core-mergeDebugResources-3 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/core/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+app.valorizze.core-debug-4 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/core/build/intermediates/merged_res/debug/mergeDebugResources
+app.valorizze.core-debug-5 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/core/build/intermediates/packaged_res/debug/packageDebugResources
+app.valorizze.core-debug-6 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/core/src/debug/res
+app.valorizze.core-main-7 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/core/src/main/res
+gradleHome-0 /Users/arley/.gradle

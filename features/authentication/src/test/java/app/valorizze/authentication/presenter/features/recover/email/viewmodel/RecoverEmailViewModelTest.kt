@@ -73,7 +73,8 @@ class RecoverEmailViewModelTest {
         advanceUntilIdle()
 
         // THEN
-        assertEquals(vm.state.value.inputError, EMAIL)
+        val state = vm.state.first { it.inputError != null }
+        assertEquals(EMAIL, state.inputError)
         coVerify(exactly = 0) { createConfirmationUseCase(any()) }
     }
 
@@ -134,7 +135,9 @@ class RecoverEmailViewModelTest {
 
         // THEN
         val state = vm.state.first { it.sheetModel != null }
+
         coVerify(exactly = 1) { createConfirmationUseCase(any()) }
+
         assertEquals(feedbackMessage, state.sheetModel?.message)
         assertFalse(state.isLoading)
     }

@@ -1,0 +1,9 @@
+app.valorizze.domain-pngs-0 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/generated/res/pngs/debug
+app.valorizze.domain-updated_navigation_xml-1 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/generated/updated_navigation_xml/debug
+app.valorizze.domain-mergeDebugResources-2 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
+app.valorizze.domain-mergeDebugResources-3 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+app.valorizze.domain-debug-4 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/merged_res/debug/mergeDebugResources
+app.valorizze.domain-debug-5 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/packaged_res/debug/packageDebugResources
+app.valorizze.domain-debug-6 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/src/debug/res
+app.valorizze.domain-main-7 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/src/main/res
+gradleHome-0 /Users/arley/.gradle

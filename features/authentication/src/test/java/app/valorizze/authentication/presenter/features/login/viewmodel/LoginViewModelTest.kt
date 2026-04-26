@@ -81,7 +81,8 @@ class LoginViewModelTest {
         advanceUntilIdle()
 
         // THEN
-        assertEquals(EMAIL, vm.state.value.inputError)
+        val state = vm.state.first { it.inputError != null }
+        assertEquals(EMAIL, state.inputError)
         coVerify(exactly = 0) { loginUseCase(any()) }
     }
 

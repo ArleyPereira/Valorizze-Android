@@ -2,12 +2,18 @@ package app.valorizze.authentication.presenter.features.recover.code.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import app.valorizze.authentication.presenter.features.recover.code.action.RecoverCodeAction
+import app.valorizze.authentication.presenter.features.recover.code.event.RecoverCodeEvent
 import app.valorizze.authentication.util.MainDispatcherRule
 import app.valorizze.core.enums.input.recover.RecoverInputType.CODE
+import app.valorizze.core.enums.result.ResultStatus
+import app.valorizze.domain.model.base.BaseResponse
 import app.valorizze.domain.usecase.remote.confirmation.ValidateConfirmationUseCase
+import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -17,11 +23,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [33])
 class RecoverCodeViewModelTest {
 
     @get:Rule
@@ -33,18 +37,22 @@ class RecoverCodeViewModelTest {
 
     @Before
     fun setUp() {
-        val savedStateHandle = SavedStateHandle(
-            mapOf("email" to "dev.arley.santana@gmail.com")
-        )
         vm = RecoverCodeViewModel(
             validateConfirmationUseCase = validateConfirmationUseCase,
-            savedStateHandle = savedStateHandle
+            savedStateHandle = SavedStateHandle(
+                mapOf(
+                    "email" to "dev.arley.santana@gmail.com",
+                    "message" to "Código enviado",
+                )
+            )
         )
     }
 
     @Test
     fun `check values initial state`() {
         // GIVEN
+        val email = "dev.arley.santana@gmail.com"
+        val message = "Código enviado"
 
         // WHEN
 
@@ -52,14 +60,14 @@ class RecoverCodeViewModelTest {
         val state = vm.state.value
         assertFalse(state.isLoading)
         assertEquals("", state.code)
-        assertEquals("", state.email)
-        assertEquals("", state.message)
+        assertEquals(email, state.email)
+        assertEquals(message, state.message)
         assertEquals(null, state.inputError)
         assertEquals(null, state.sheetModel)
     }
 
     @Test
-    fun `changing email updates state email`() {
+    fun `changing code updates state code`() {
         // GIVEN
         val code = "123456"
 
@@ -84,6 +92,63 @@ class RecoverCodeViewModelTest {
         val state = vm.state.value
         assertEquals(CODE, state.inputError)
         coVerify(exactly = 0) { validateConfirmationUseCase(any()) }
+    }
+
+    @Test
+    fun `successful validate and stops loading and emits navigation`() = runTest {
+        // GIVEN
+        val email = "dev.arley.santana@gmail.com"
+        val code = "123456"
+
+        coEvery { validateConfirmationUseCase(any()) } returns BaseResponse(
+            resultStatus = ResultStatus.SUCCESS,
+            status = 200,
+        )
+
+        vm.dispatchAction(RecoverCodeAction.OnValueChange(value = code, type = CODE))
+
+        val navigationEvent = async {
+            vm.event.first { it is RecoverCodeEvent.Navigation.RecoverPasswordScreen }
+        }
+
+        // WHEN
+        vm.dispatchAction(RecoverCodeAction.ValidateConfirmation)
+
+        advanceUntilIdle()
+
+        // THEN
+        val event = navigationEvent.await() as RecoverCodeEvent.Navigation.RecoverPasswordScreen
+        assertEquals(email, event.email)
+        assertEquals(code, event.code)
+
+        coVerify(exactly = 1) { validateConfirmationUseCase(any()) }
+        assertFalse(vm.state.value.isLoading)
+    }
+
+    @Test
+    fun `error validate sets feedback and stops loading`() = runTest {
+        // GIVEN
+        val code = "123456"
+        val feedbackMessage = "Código inválido"
+
+        coEvery { validateConfirmationUseCase(any()) } returns BaseResponse(
+            resultStatus = ResultStatus.ERROR,
+            status = 400,
+            message = feedbackMessage,
+        )
+
+        vm.dispatchAction(RecoverCodeAction.OnValueChange(value = code, type = CODE))
+
+        // WHEN
+        vm.dispatchAction(RecoverCodeAction.ValidateConfirmation)
+
+        advanceUntilIdle()
+
+        // THEN
+        val state = vm.state.first { it.sheetModel != null }
+        coVerify(exactly = 1) { validateConfirmationUseCase(any()) }
+        assertEquals(feedbackMessage, state.sheetModel?.message)
+        assertFalse(state.isLoading)
     }
 
 }

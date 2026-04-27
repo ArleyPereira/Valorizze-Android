@@ -3,7 +3,7 @@ package app.valorizze.authentication.presenter.features.recover.password.viewmod
 import androidx.lifecycle.SavedStateHandle
 import app.valorizze.authentication.presenter.features.recover.password.action.RecoverPasswordAction
 import app.valorizze.authentication.presenter.features.recover.password.event.RecoverPasswordEvent
-import app.valorizze.authentication.util.MainDispatcherRule
+import app.valorizze.authentication.util.MainDispatcherTestRule
 import app.valorizze.core.enums.input.recover.RecoverInputType.PASSWORD
 import app.valorizze.core.enums.result.ResultStatus
 import app.valorizze.domain.model.base.BaseResponse
@@ -29,7 +29,7 @@ import org.robolectric.RobolectricTestRunner
 class RecoverPasswordViewModelTest {
 
     @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
+    val mainDispatcherRule = MainDispatcherTestRule()
 
     private val confirmConfirmationUseCase: ConfirmConfirmationUseCase = mockk()
 
@@ -76,77 +76,89 @@ class RecoverPasswordViewModelTest {
     }
 
     @Test
-    fun `clicking confirm with empty password sets inputError PASSWORD`() = runTest {
-        // GIVEN
+    fun `clicking confirm with empty password sets inputError PASSWORD`() =
+        runTest(mainDispatcherRule.dispatcher) {
+            // GIVEN
 
-        // WHEN
-        vm.dispatchAction(RecoverPasswordAction.ConfirmConfirmation)
+            // WHEN
+            vm.dispatchAction(RecoverPasswordAction.ConfirmConfirmation)
 
-        advanceUntilIdle()
+            advanceUntilIdle()
 
-        // THEN
-        val state = vm.state.first { it.inputError != null }
-        assertEquals(PASSWORD, state.inputError)
+            // THEN
+            assertEquals(PASSWORD, vm.state.value.inputError)
 
-        coVerify(exactly = 0) { confirmConfirmationUseCase(any()) }
-    }
-
-    @Test
-    fun `successful confirmation and stops loading and emits navigation`() = runTest {
-        // GIVEN
-        val password = "teste123"
-        val feedbackMessage = "Confirmação realizada com sucesso"
-
-        coEvery { confirmConfirmationUseCase(any()) } returns BaseResponse(
-            resultStatus = ResultStatus.SUCCESS,
-            status = 200,
-            message = feedbackMessage
-        )
-
-        vm.dispatchAction(RecoverPasswordAction.OnValueChange(value = password, type = PASSWORD))
-
-        val navigationEvent = async {
-            vm.event.first { it is RecoverPasswordEvent.Navigation.LoginScreen }
+            coVerify(exactly = 0) { confirmConfirmationUseCase(any()) }
         }
 
-        // WHEN
-        vm.dispatchAction(RecoverPasswordAction.ConfirmConfirmation)
+    @Test
+    fun `successful confirmation and stops loading and emits navigation`() =
+        runTest(mainDispatcherRule.dispatcher) {
+            // GIVEN
+            val password = "teste123"
+            val feedbackMessage = "Confirmação realizada com sucesso"
 
-        advanceUntilIdle()
+            coEvery { confirmConfirmationUseCase(any()) } returns BaseResponse(
+                resultStatus = ResultStatus.SUCCESS,
+                status = 200,
+                message = feedbackMessage
+            )
 
-        // THEN
-        val event = navigationEvent.await() as RecoverPasswordEvent.Navigation.LoginScreen
-        assertEquals(feedbackMessage, event.message)
+            vm.dispatchAction(
+                RecoverPasswordAction.OnValueChange(
+                    value = password,
+                    type = PASSWORD
+                )
+            )
 
-        coVerify(exactly = 1) { confirmConfirmationUseCase(any()) }
-    }
+            val navigationEvent = async {
+                vm.event.first { it is RecoverPasswordEvent.Navigation.LoginScreen }
+            }
+
+            // WHEN
+            vm.dispatchAction(RecoverPasswordAction.ConfirmConfirmation)
+
+            advanceUntilIdle()
+
+            // THEN
+            val event = navigationEvent.await() as RecoverPasswordEvent.Navigation.LoginScreen
+            assertEquals(feedbackMessage, event.message)
+
+            coVerify(exactly = 1) { confirmConfirmationUseCase(any()) }
+        }
 
     @Test
-    fun `error confirmation sets feedback and stops loading`() = runTest {
-        // GIVEN
-        val password = "teste123"
-        val feedbackMessage = "Não foi possível realizar a confirmação"
+    fun `error confirmation sets feedback and stops loading`() =
+        runTest(mainDispatcherRule.dispatcher) {
+            // GIVEN
+            val password = "teste123"
+            val feedbackMessage = "Não foi possível realizar a confirmação"
 
-        coEvery { confirmConfirmationUseCase(any()) } returns BaseResponse(
-            resultStatus = ResultStatus.ERROR,
-            status = 400,
-            message = feedbackMessage
-        )
+            coEvery { confirmConfirmationUseCase(any()) } returns BaseResponse(
+                resultStatus = ResultStatus.ERROR,
+                status = 400,
+                message = feedbackMessage
+            )
 
-        vm.dispatchAction(RecoverPasswordAction.OnValueChange(value = password, type = PASSWORD))
+            vm.dispatchAction(
+                RecoverPasswordAction.OnValueChange(
+                    value = password,
+                    type = PASSWORD
+                )
+            )
 
-        // WHEN
-        vm.dispatchAction(RecoverPasswordAction.ConfirmConfirmation)
+            // WHEN
+            vm.dispatchAction(RecoverPasswordAction.ConfirmConfirmation)
 
-        advanceUntilIdle()
+            advanceUntilIdle()
 
-        // THEN
-        val state = vm.state.first { it.sheetModel != null }
+            // THEN
+            val state = vm.state.value
 
-        coVerify(exactly = 1) { confirmConfirmationUseCase(any()) }
+            coVerify(exactly = 1) { confirmConfirmationUseCase(any()) }
 
-        assertEquals(feedbackMessage, state.sheetModel?.message)
-        assertFalse(state.isLoading)
-    }
+            assertEquals(feedbackMessage, state.sheetModel?.message)
+            assertFalse(state.isLoading)
+        }
 
 }

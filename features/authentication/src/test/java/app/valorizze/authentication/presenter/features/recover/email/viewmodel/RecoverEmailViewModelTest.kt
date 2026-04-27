@@ -2,7 +2,7 @@ package app.valorizze.authentication.presenter.features.recover.email.viewmodel
 
 import app.valorizze.authentication.presenter.features.recover.email.action.RecoverEmailAction
 import app.valorizze.authentication.presenter.features.recover.email.event.RecoverEmailEvent
-import app.valorizze.authentication.util.MainDispatcherRule
+import app.valorizze.authentication.util.MainDispatcherTestRule
 import app.valorizze.core.enums.input.recover.RecoverInputType.EMAIL
 import app.valorizze.core.enums.result.ResultStatus
 import app.valorizze.domain.model.base.BaseResponse
@@ -25,7 +25,7 @@ import org.junit.Test
 class RecoverEmailViewModelTest {
 
     @get:Rule
-    private val mainDispatcherRule = MainDispatcherRule()
+    private val mainDispatcherRule = MainDispatcherTestRule()
 
     private val createConfirmationUseCase: CreateConfirmationUseCase = mockk()
 
@@ -64,80 +64,81 @@ class RecoverEmailViewModelTest {
     }
 
     @Test
-    fun `clicking crate with empty email sets inputError EMAIL`() = runTest {
-        // GIVEN
+    fun `clicking crate with empty email sets inputError EMAIL`() =
+        runTest(mainDispatcherRule.dispatcher) {
+            // WHEN
+            vm.dispatchAction(RecoverEmailAction.CreateConfirmation)
 
-        // WHEN
-        vm.dispatchAction(RecoverEmailAction.CreateConfirmation)
+            advanceUntilIdle()
 
-        advanceUntilIdle()
-
-        // THEN
-        val state = vm.state.first { it.inputError != null }
-        assertEquals(EMAIL, state.inputError)
-        coVerify(exactly = 0) { createConfirmationUseCase(any()) }
-    }
-
-    @Test
-    fun `successful create confirmation and emits navigation end stops loading`() = runTest {
-        // GIVEN
-        val email = "dev.arley.santana@gmail.com"
-        val feedbackMessage = "Confirmação criada com sucesso"
-
-        coEvery { createConfirmationUseCase(any()) } returns BaseResponse(
-            resultStatus = ResultStatus.SUCCESS,
-            data = null,
-            message = feedbackMessage,
-            action = null,
-            status = 200
-        )
-
-        vm.dispatchAction(RecoverEmailAction.OnValueChange(value = email, type = EMAIL))
-
-        val navigationEvent = async {
-            vm.event.first { it is RecoverEmailEvent.Navigation.RecoverCodeScreen }
+            // THEN
+            val state = vm.state.first { it.inputError != null }
+            assertEquals(EMAIL, state.inputError)
+            coVerify(exactly = 0) { createConfirmationUseCase(any()) }
         }
 
-        // WHEN
-        vm.dispatchAction(RecoverEmailAction.CreateConfirmation)
+    @Test
+    fun `successful create confirmation and emits navigation end stops loading`() =
+        runTest(mainDispatcherRule.dispatcher) {
+            // GIVEN
+            val email = "dev.arley.santana@gmail.com"
+            val feedbackMessage = "Confirmação criada com sucesso"
 
-        advanceUntilIdle()
+            coEvery { createConfirmationUseCase(any()) } returns BaseResponse(
+                resultStatus = ResultStatus.SUCCESS,
+                data = null,
+                message = feedbackMessage,
+                action = null,
+                status = 200
+            )
 
-        // THEN
-        val event = navigationEvent.await() as RecoverEmailEvent.Navigation.RecoverCodeScreen
-        assertEquals(email, event.email)
-        assertEquals(feedbackMessage, event.message)
+            vm.dispatchAction(RecoverEmailAction.OnValueChange(value = email, type = EMAIL))
 
-        coVerify(exactly = 1) { createConfirmationUseCase(any()) }
-        assertFalse(vm.state.value.isLoading)
-    }
+            val navigationEvent = async {
+                vm.event.first { it is RecoverEmailEvent.Navigation.RecoverCodeScreen }
+            }
+
+            // WHEN
+            vm.dispatchAction(RecoverEmailAction.CreateConfirmation)
+
+            advanceUntilIdle()
+
+            // THEN
+            val event = navigationEvent.await() as RecoverEmailEvent.Navigation.RecoverCodeScreen
+            assertEquals(email, event.email)
+            assertEquals(feedbackMessage, event.message)
+
+            coVerify(exactly = 1) { createConfirmationUseCase(any()) }
+            assertFalse(vm.state.value.isLoading)
+        }
 
     @Test
-    fun `error create confirmation sets feedback and stops loading`() = runTest {
-        // GIVEN
-        val email = "dev.arley.santana@gmail.com"
-        val feedbackMessage = "Não foi possível criar a confirmação"
+    fun `error create confirmation sets feedback and stops loading`() =
+        runTest(mainDispatcherRule.dispatcher) {
+            // GIVEN
+            val email = "dev.arley.santana@gmail.com"
+            val feedbackMessage = "Não foi possível criar a confirmação"
 
-        coEvery { createConfirmationUseCase(any()) } returns BaseResponse(
-            resultStatus = ResultStatus.ERROR,
-            status = 400,
-            action = null,
-            message = feedbackMessage,
-            data = null
-        )
+            coEvery { createConfirmationUseCase(any()) } returns BaseResponse(
+                resultStatus = ResultStatus.ERROR,
+                status = 400,
+                action = null,
+                message = feedbackMessage,
+                data = null
+            )
 
-        vm.dispatchAction(RecoverEmailAction.OnValueChange(value = email, type = EMAIL))
+            vm.dispatchAction(RecoverEmailAction.OnValueChange(value = email, type = EMAIL))
 
-        // WHEN
-        vm.dispatchAction(RecoverEmailAction.CreateConfirmation)
+            // WHEN
+            vm.dispatchAction(RecoverEmailAction.CreateConfirmation)
 
-        advanceUntilIdle()
+            advanceUntilIdle()
 
-        // THEN
-        val state = vm.state.first { it.sheetModel != null }
-        coVerify(exactly = 1) { createConfirmationUseCase(any()) }
-        assertEquals(feedbackMessage, state.sheetModel?.message)
-        assertFalse(state.isLoading)
-    }
+            // THEN
+            val state = vm.state.first { it.sheetModel != null }
+            coVerify(exactly = 1) { createConfirmationUseCase(any()) }
+            assertEquals(feedbackMessage, state.sheetModel?.message)
+            assertFalse(state.isLoading)
+        }
 
 }

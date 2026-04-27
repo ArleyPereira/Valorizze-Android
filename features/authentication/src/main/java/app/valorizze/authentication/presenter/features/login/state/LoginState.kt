@@ -5,7 +5,7 @@ import app.valorizze.domain.model.feedback.Feedback
 import app.valorizze.domain.model.sheet.DefaultSheetModel
 
 data class LoginState(
-    val isLoading: Boolean = true,
+    val isLoading: Boolean = false,
     val email: String = "",
     val password: String = "",
     val message: String = "",

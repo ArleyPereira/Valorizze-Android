@@ -3,7 +3,7 @@ package app.valorizze.authentication.presenter.features.recover.code.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import app.valorizze.authentication.presenter.features.recover.code.action.RecoverCodeAction
 import app.valorizze.authentication.presenter.features.recover.code.event.RecoverCodeEvent
-import app.valorizze.authentication.util.MainDispatcherRule
+import app.valorizze.authentication.util.MainDispatcherTestRule
 import app.valorizze.core.enums.input.recover.RecoverInputType.CODE
 import app.valorizze.core.enums.result.ResultStatus
 import app.valorizze.domain.model.base.BaseResponse
@@ -29,7 +29,7 @@ import org.robolectric.RobolectricTestRunner
 class RecoverCodeViewModelTest {
 
     @get:Rule
-    private val mainDispatcherRule = MainDispatcherRule()
+    private val mainDispatcherRule = MainDispatcherTestRule()
 
     private val validateConfirmationUseCase: ValidateConfirmationUseCase = mockk()
 
@@ -80,75 +80,78 @@ class RecoverCodeViewModelTest {
     }
 
     @Test
-    fun `clicking validate with empty code sets inputError CODE`() = runTest {
-        // GIVEN
+    fun `clicking validate with empty code sets inputError CODE`() =
+        runTest(mainDispatcherRule.dispatcher) {
+            // GIVEN
 
-        // WHEN
-        vm.dispatchAction(RecoverCodeAction.ValidateConfirmation)
+            // WHEN
+            vm.dispatchAction(RecoverCodeAction.ValidateConfirmation)
 
-        advanceUntilIdle()
+            advanceUntilIdle()
 
-        // THEN
-        val state = vm.state.value
-        assertEquals(CODE, state.inputError)
-        coVerify(exactly = 0) { validateConfirmationUseCase(any()) }
-    }
-
-    @Test
-    fun `successful validate and stops loading and emits navigation`() = runTest {
-        // GIVEN
-        val email = "dev.arley.santana@gmail.com"
-        val code = "123456"
-
-        coEvery { validateConfirmationUseCase(any()) } returns BaseResponse(
-            resultStatus = ResultStatus.SUCCESS,
-            status = 200,
-        )
-
-        vm.dispatchAction(RecoverCodeAction.OnValueChange(value = code, type = CODE))
-
-        val navigationEvent = async {
-            vm.event.first { it is RecoverCodeEvent.Navigation.RecoverPasswordScreen }
+            // THEN
+            val state = vm.state.value
+            assertEquals(CODE, state.inputError)
+            coVerify(exactly = 0) { validateConfirmationUseCase(any()) }
         }
 
-        // WHEN
-        vm.dispatchAction(RecoverCodeAction.ValidateConfirmation)
+    @Test
+    fun `successful validate and stops loading and emits navigation`() =
+        runTest(mainDispatcherRule.dispatcher) {
+            // GIVEN
+            val email = "dev.arley.santana@gmail.com"
+            val code = "123456"
 
-        advanceUntilIdle()
+            coEvery { validateConfirmationUseCase(any()) } returns BaseResponse(
+                resultStatus = ResultStatus.SUCCESS,
+                status = 200,
+            )
 
-        // THEN
-        val event = navigationEvent.await() as RecoverCodeEvent.Navigation.RecoverPasswordScreen
-        assertEquals(email, event.email)
-        assertEquals(code, event.code)
+            vm.dispatchAction(RecoverCodeAction.OnValueChange(value = code, type = CODE))
 
-        coVerify(exactly = 1) { validateConfirmationUseCase(any()) }
-        assertFalse(vm.state.value.isLoading)
-    }
+            val navigationEvent = async {
+                vm.event.first { it is RecoverCodeEvent.Navigation.RecoverPasswordScreen }
+            }
+
+            // WHEN
+            vm.dispatchAction(RecoverCodeAction.ValidateConfirmation)
+
+            advanceUntilIdle()
+
+            // THEN
+            val event = navigationEvent.await() as RecoverCodeEvent.Navigation.RecoverPasswordScreen
+            assertEquals(email, event.email)
+            assertEquals(code, event.code)
+
+            coVerify(exactly = 1) { validateConfirmationUseCase(any()) }
+            assertFalse(vm.state.value.isLoading)
+        }
 
     @Test
-    fun `error validate sets feedback and stops loading`() = runTest {
-        // GIVEN
-        val code = "123456"
-        val feedbackMessage = "Código inválido"
+    fun `error validate sets feedback and stops loading`() =
+        runTest(mainDispatcherRule.dispatcher) {
+            // GIVEN
+            val code = "123456"
+            val feedbackMessage = "Código inválido"
 
-        coEvery { validateConfirmationUseCase(any()) } returns BaseResponse(
-            resultStatus = ResultStatus.ERROR,
-            status = 400,
-            message = feedbackMessage,
-        )
+            coEvery { validateConfirmationUseCase(any()) } returns BaseResponse(
+                resultStatus = ResultStatus.ERROR,
+                status = 400,
+                message = feedbackMessage,
+            )
 
-        vm.dispatchAction(RecoverCodeAction.OnValueChange(value = code, type = CODE))
+            vm.dispatchAction(RecoverCodeAction.OnValueChange(value = code, type = CODE))
 
-        // WHEN
-        vm.dispatchAction(RecoverCodeAction.ValidateConfirmation)
+            // WHEN
+            vm.dispatchAction(RecoverCodeAction.ValidateConfirmation)
 
-        advanceUntilIdle()
+            advanceUntilIdle()
 
-        // THEN
-        val state = vm.state.first { it.sheetModel != null }
-        coVerify(exactly = 1) { validateConfirmationUseCase(any()) }
-        assertEquals(feedbackMessage, state.sheetModel?.message)
-        assertFalse(state.isLoading)
-    }
+            // THEN
+            val state = vm.state.value
+            coVerify(exactly = 1) { validateConfirmationUseCase(any()) }
+            assertEquals(feedbackMessage, state.sheetModel?.message)
+            assertFalse(state.isLoading)
+        }
 
 }

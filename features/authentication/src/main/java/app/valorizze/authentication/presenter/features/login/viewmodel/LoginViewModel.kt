@@ -6,7 +6,7 @@ import app.valorizze.authentication.presenter.features.login.action.LoginAction
 import app.valorizze.authentication.presenter.features.login.event.LoginEvent
 import app.valorizze.authentication.presenter.features.login.state.LoginState
 import app.valorizze.core.enums.action.ActionType
-import app.valorizze.core.enums.feedback.FeedbackType.*
+import app.valorizze.core.enums.feedback.FeedbackType.ERROR
 import app.valorizze.core.enums.input.login.LoginInputType
 import app.valorizze.core.enums.input.login.LoginInputType.EMAIL
 import app.valorizze.core.enums.input.login.LoginInputType.PASSWORD

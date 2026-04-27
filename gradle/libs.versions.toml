@@ -13,6 +13,7 @@ ktor = "3.4.3"
 composePlaceholder = "1.0.12"
 junit = "4.13.2"
 junitVersion = "1.3.0"
+androidxTest = "1.7.0"
 espressoCore = "3.7.0"
 mockk = "1.14.9"
 robolectric = "4.16.1"
@@ -62,6 +63,8 @@ compose-placeholder = { group = "com.eygraber", name = "compose-placeholder-mate
 # Tests
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTest" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTest" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }

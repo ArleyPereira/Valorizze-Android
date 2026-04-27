@@ -56,15 +56,21 @@ dependencies {
     // Debug / tooling
     implementation(libs.androidx.compose.ui.tooling.preview)
 
-    // Tests
+    // Unit tests
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.robolectric)
+
+    // Instrumented tests (androidTest)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+
+    // Debug-only test helpers
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }
 

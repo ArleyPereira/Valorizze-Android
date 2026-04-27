@@ -3,10 +3,9 @@ package app.valorizze.authentication.presenter.features.login.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.valorizze.authentication.presenter.features.login.action.LoginAction
-import app.valorizze.authentication.presenter.features.login.event.LoginEvent
 import app.valorizze.authentication.presenter.features.login.state.LoginState
 import app.valorizze.core.enums.action.ActionType
-import app.valorizze.core.enums.feedback.FeedbackType.ERROR
+import app.valorizze.core.enums.feedback.FeedbackType
 import app.valorizze.core.enums.input.login.LoginInputType
 import app.valorizze.core.enums.input.login.LoginInputType.EMAIL
 import app.valorizze.core.enums.input.login.LoginInputType.PASSWORD
@@ -18,10 +17,8 @@ import app.valorizze.domain.dto.auth.LoginDTO
 import app.valorizze.domain.model.feedback.Feedback
 import app.valorizze.domain.model.sheet.DefaultSheetModel
 import app.valorizze.domain.usecase.remote.auth.LoginUseCase
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -33,15 +30,23 @@ class LoginViewModel(
     private val _state = MutableStateFlow(LoginState())
     val state = _state.asStateFlow()
 
-    private val _event: Channel<LoginEvent> = Channel()
-    val event = _event.receiveAsFlow()
-
     fun dispatchAction(action: LoginAction) {
         when (action) {
-            is LoginAction.OnValueChange -> onValueChange(action.value, action.type)
-            LoginAction.OnSignIn -> onSignIn()
-            LoginAction.DismissFeedback -> _state.update { it.copy(feedback = null) }
-            LoginAction.ClearBottomSheet -> _state.update { it.copy(sheetModel = null) }
+            is LoginAction.OnValueChange -> {
+                onValueChange(action.value, action.type)
+            }
+
+            LoginAction.OnSignIn -> {
+                onSignIn()
+            }
+
+            LoginAction.DismissFeedback -> {
+                dismissFeedback()
+            }
+
+            LoginAction.ClearBottomSheet -> {
+                clearBottomSheet()
+            }
         }
     }
 
@@ -65,8 +70,12 @@ class LoginViewModel(
             when (response.resultStatus) {
                 SUCCESS -> {
                     localPreferences.saveUser(user = response.data)
-                    _event.send(LoginEvent.Navigation.Main)
-                    _state.update { it.copy(isLoading = false) }
+                    setFeedback(
+                        feedback = Feedback(
+                            title = response.message.orEmpty(),
+                            type = FeedbackType.SUCCESS
+                        )
+                    )
                 }
 
                 else -> setupError(message = response.message, action = response.action)
@@ -102,10 +111,27 @@ class LoginViewModel(
             it.copy(
                 sheetModel = sheetModel,
                 message = message.orEmpty(),
-                isLoading = false,
-                feedback = Feedback(title = message.orEmpty(), type = ERROR)
+                isLoading = false
             )
         }
     }
+
+    private fun setFeedback(feedback: Feedback) {
+        _state.update {
+            it.copy(
+                feedback = feedback,
+                isLoading = false
+            )
+        }
+    }
+
+    private fun dismissFeedback() {
+        _state.update { it.copy(feedback = null) }
+    }
+
+    private fun clearBottomSheet() {
+        _state.update { it.copy(sheetModel = null) }
+    }
+
 }
 

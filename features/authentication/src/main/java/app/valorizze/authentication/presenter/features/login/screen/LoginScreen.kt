@@ -19,12 +19,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.valorizze.authentication.R
 import app.valorizze.authentication.presenter.features.login.action.LoginAction
-import app.valorizze.authentication.presenter.features.login.event.LoginEvent
 import app.valorizze.authentication.presenter.features.login.state.LoginState
 import app.valorizze.authentication.presenter.features.login.viewmodel.LoginViewModel
 import app.valorizze.core.enums.illustration.IllustrationType
@@ -41,28 +41,16 @@ import app.valorizze.design.presenter.components.textfield.default.TextFieldUI
 import app.valorizze.design.presenter.components.textfield.password.TextFieldPasswordUI
 import app.valorizze.design.presenter.theme.ColorScheme
 import kotlinx.coroutines.launch
-import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
-import app.valorizze.authentication.R
 
 @Composable
 fun LoginScreen(
-    navigateToMainScreen: () -> Unit,
     navigateToSignupScreen: () -> Unit,
     navigateToRecoverEmailScreen: () -> Unit,
     navigateToValidateSignupScreen: (email: String, password: String, message: String) -> Unit,
 ) {
     val viewModel = koinViewModel<LoginViewModel>()
     val state by viewModel.state.collectAsState()
-    val event by viewModel.event.collectAsStateWithLifecycle(initialValue = LoginEvent.Idle)
-
-    when (event) {
-        is LoginEvent.Navigation.Main -> {
-            navigateToMainScreen()
-        }
-
-        else -> {}
-    }
 
     LoginContent(
         state = state,

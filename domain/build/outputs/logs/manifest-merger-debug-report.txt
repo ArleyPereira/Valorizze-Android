@@ -1,16 +1,16 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest12890807906168230533.xml:2:13-83
-INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest12890807906168230533.xml:2:13-83
+ADDED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest1400483855372976501.xml:2:13-83
+INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest1400483855372976501.xml:2:13-83
 	package
-		INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest12890807906168230533.xml
+		INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest1400483855372976501.xml
 	xmlns:android
-		ADDED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest12890807906168230533.xml:2:23-81
+		ADDED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest1400483855372976501.xml:2:23-81
 uses-sdk
-INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest12890807906168230533.xml reason: use-sdk injection requested
-INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest12890807906168230533.xml
-INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest12890807906168230533.xml
+INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest1400483855372976501.xml reason: use-sdk injection requested
+INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest1400483855372976501.xml
+INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest1400483855372976501.xml
 	android:targetSdkVersion
-		INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest12890807906168230533.xml
+		INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest1400483855372976501.xml
 	android:minSdkVersion
-		INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest12890807906168230533.xml
+		INJECTED from /Users/arley/AndroidStudioProjects/ValorizzeAndroid/domain/build/intermediates/tmp/ProcessLibraryManifest/debug/tempAndroidManifest1400483855372976501.xml

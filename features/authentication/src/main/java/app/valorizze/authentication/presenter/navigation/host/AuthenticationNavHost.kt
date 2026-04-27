@@ -1,11 +1,9 @@
 package app.valorizze.authentication.presenter.navigation.host
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import app.valorizze.authentication.presenter.features.login.screen.LoginScreen
 import app.valorizze.authentication.presenter.features.recover.code.screen.RecoverCodeScreen
@@ -26,7 +24,6 @@ fun AuthenticationNavHost(
     ) {
         composable<AuthenticationRoutes.Login> {
             LoginScreen(
-                navigateToMainScreen = { /* sem Main neste projeto */ },
                 navigateToSignupScreen = { navHostController.navigate(AuthenticationRoutes.Signup) },
                 navigateToRecoverEmailScreen = { navHostController.navigate(AuthenticationRoutes.RecoverEmail) },
                 navigateToValidateSignupScreen = { email, password, message ->

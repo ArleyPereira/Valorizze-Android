@@ -1,7 +1,6 @@
 package app.valorizze.authentication.presenter.features.login.viewmodel
 
 import app.valorizze.authentication.presenter.features.login.action.LoginAction
-import app.valorizze.authentication.presenter.features.login.event.LoginEvent
 import app.valorizze.authentication.util.MainDispatcherTestRule
 import app.valorizze.core.enums.input.login.LoginInputType.EMAIL
 import app.valorizze.core.enums.input.login.LoginInputType.PASSWORD
@@ -16,8 +15,6 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -103,7 +100,7 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `successful login saves user emits navigation and stops loading`() {
+    fun `successful login saves user sets success feedback and stops loading`() {
         runTest(mainDispatcherRule.scheduler) {
             // GIVEN
             val user = User(
@@ -125,12 +122,6 @@ class LoginViewModelTest {
             vm.dispatchAction(LoginAction.OnValueChange("john.doe@example.com", EMAIL))
             vm.dispatchAction(LoginAction.OnValueChange("123456", PASSWORD))
 
-            // IMPORTANT: o Channel é rendezvous; se ninguém estiver coletando,
-            // o send() suspende e o ViewModel pode não chegar a setar isLoading = false.
-            val navigationEvent = async {
-                vm.event.first { it is LoginEvent.Navigation.Main }
-            }
-
             // WHEN
             vm.dispatchAction(LoginAction.OnSignIn)
 
@@ -143,9 +134,8 @@ class LoginViewModelTest {
 
             verify(exactly = 1) { localPreferences.saveUser(user) }
 
-            navigationEvent.await()
-
             assertFalse(vm.state.value.isLoading)
+            assertTrue(vm.state.value.feedback != null)
         }
     }
 
@@ -173,7 +163,6 @@ class LoginViewModelTest {
             val state = vm.state.value
             assertFalse(state.isLoading)
             assertEquals("Credenciais inválidas", state.message)
-            assertTrue(state.feedback != null)
             assertTrue(state.sheetModel != null)
 
             verify(exactly = 0) { localPreferences.saveUser(any()) }

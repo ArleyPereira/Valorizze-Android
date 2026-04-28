@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1020388765753",
+    "project_id": "valorizze-android",
+    "storage_bucket": "valorizze-android.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1020388765753:android:e863d8a8428d717ae5dde8",
+        "android_client_info": {
+          "package_name": "app.valorizze"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfpk55oCuxtYgqB_1IVstCzhjs95-jd-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

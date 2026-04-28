@@ -6,4 +6,4 @@ app.valorizze.data-debug-4 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/d
 app.valorizze.data-debug-5 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/data/build/intermediates/packaged_res/debug/packageDebugResources
 app.valorizze.data-debug-6 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/data/src/debug/res
 app.valorizze.data-main-7 /Users/arley/AndroidStudioProjects/ValorizzeAndroid/data/src/main/res
-gradleHome-0 /Users/arley/.gradle
+gradleHome-0 /private/var/folders/nt/xbfty5p926sbr1l2s8g3tsg40000gn/T/cursor-sandbox-cache/58ba47f278ea4a1e77c49f4aeb6c4641/gradle

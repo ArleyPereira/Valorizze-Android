@@ -5,11 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.Alignment
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -17,11 +12,19 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.valorizze.authentication.R
 import app.valorizze.authentication.presenter.features.recover.email.action.RecoverEmailAction
 import app.valorizze.authentication.presenter.features.recover.email.event.RecoverEmailEvent
 import app.valorizze.authentication.presenter.features.recover.email.state.RecoverEmailState
@@ -37,10 +40,9 @@ import app.valorizze.design.presenter.components.header.HeaderScreen
 import app.valorizze.design.presenter.components.icon.illustration.getDrawableIllustration
 import app.valorizze.design.presenter.components.textfield.default.TextFieldUI
 import app.valorizze.design.presenter.theme.ColorScheme
+import app.valorizze.design.presenter.theme.HelloTheme
 import kotlinx.coroutines.launch
-import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
-import app.valorizze.authentication.R
 
 @Composable
 fun RecoverEmailScreen(
@@ -176,3 +178,14 @@ fun RecoverEmailContent(
     )
 }
 
+@PreviewLightDark
+@Composable
+private fun RecoverEmailPreview() {
+    HelloTheme {
+        RecoverEmailContent(
+            state = RecoverEmailState(),
+            action = {},
+            onBackPressed = {},
+        )
+    }
+}

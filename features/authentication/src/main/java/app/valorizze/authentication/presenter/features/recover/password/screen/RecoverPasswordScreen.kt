@@ -31,8 +31,10 @@ import app.valorizze.design.presenter.components.button.PrimaryButton
 import app.valorizze.design.presenter.components.header.HeaderScreen
 import app.valorizze.design.presenter.components.textfield.password.TextFieldPasswordUI
 import app.valorizze.design.presenter.theme.ColorScheme
+import app.valorizze.design.presenter.theme.HelloTheme
 import kotlinx.coroutines.launch
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import org.koin.androidx.compose.koinViewModel
 import app.valorizze.authentication.R
 
@@ -151,5 +153,17 @@ fun RecoverPasswordContent(
             }
         }
     )
+}
+
+@PreviewLightDark
+@Composable
+private fun RecoverPasswordPreview() {
+    HelloTheme {
+        RecoverPasswordContent(
+            state = RecoverPasswordState(),
+            action = {},
+            onBackPressed = {},
+        )
+    }
 }
 

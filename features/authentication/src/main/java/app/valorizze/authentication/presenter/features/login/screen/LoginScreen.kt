@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.valorizze.authentication.R
 import app.valorizze.authentication.presenter.features.login.action.LoginAction
@@ -40,6 +41,7 @@ import app.valorizze.design.presenter.components.snackbar.FeedbackUI
 import app.valorizze.design.presenter.components.textfield.default.TextFieldUI
 import app.valorizze.design.presenter.components.textfield.password.TextFieldPasswordUI
 import app.valorizze.design.presenter.theme.ColorScheme
+import app.valorizze.design.presenter.theme.HelloTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -69,7 +71,7 @@ fun LoginScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun LoginContent(
+fun LoginContent(
     state: LoginState,
     action: (LoginAction) -> Unit,
     navigateToSignupScreen: () -> Unit,
@@ -217,3 +219,16 @@ private fun LoginContent(
     )
 }
 
+@PreviewLightDark
+@Composable
+private fun LoginPreview() {
+    HelloTheme {
+        LoginContent(
+            state = LoginState(),
+            action = {} ,
+            navigateToSignupScreen = {},
+            navigateToRecoverEmailScreen = {},
+            navigateToValidateSignupScreen = {}
+        )
+    }
+}

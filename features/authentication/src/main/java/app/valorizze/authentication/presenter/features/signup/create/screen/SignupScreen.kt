@@ -22,8 +22,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.valorizze.authentication.presenter.features.signup.create.action.SignupAction
@@ -33,7 +32,6 @@ import app.valorizze.authentication.presenter.features.signup.create.viewmodel.S
 import app.valorizze.core.enums.illustration.IllustrationType
 import app.valorizze.core.enums.input.signup.SignupInputType
 import app.valorizze.core.enums.sheet.BottomSheetType.NOT_CONFIRMED
-import app.valorizze.core.enums.theme.ThemeType
 import app.valorizze.core.functions.browser.openUrlInBrowser
 import app.valorizze.design.presenter.components.bar.top.TopAppBarUI
 import app.valorizze.design.presenter.components.bottom.screen.BottomScreenUI
@@ -47,7 +45,6 @@ import app.valorizze.design.presenter.components.textfield.default.TextFieldUI
 import app.valorizze.design.presenter.components.textfield.password.TextFieldPasswordUI
 import app.valorizze.design.presenter.theme.ColorScheme
 import app.valorizze.design.presenter.theme.HelloTheme
-import app.valorizze.design.provider.preview.LightDarkModePreviewProvider
 import kotlinx.coroutines.launch
 import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
@@ -292,12 +289,10 @@ private fun SignupContent(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-private fun SignupPreview(
-    @PreviewParameter(LightDarkModePreviewProvider::class) type: ThemeType
-) {
-    HelloTheme(themeType = type) {
+private fun SignupPreview() {
+    HelloTheme {
         SignupContent(
             state = SignupState(
                 email = "arley.santana@hellodev.com.br",

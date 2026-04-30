@@ -20,8 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.valorizze.authentication.presenter.features.recover.code.action.RecoverCodeAction
@@ -30,7 +29,6 @@ import app.valorizze.authentication.presenter.features.recover.code.state.Recove
 import app.valorizze.authentication.presenter.features.recover.code.viewmodel.RecoverCodeViewModel
 import app.valorizze.core.enums.illustration.IllustrationType
 import app.valorizze.core.enums.input.recover.RecoverInputType
-import app.valorizze.core.enums.theme.ThemeType
 import app.valorizze.design.presenter.components.bar.top.TopAppBarUI
 import app.valorizze.design.presenter.components.bottom.screen.BottomScreenUI
 import app.valorizze.design.presenter.components.bottom.sheet.content.generic.GenericSheetContent
@@ -41,7 +39,6 @@ import app.valorizze.design.presenter.components.icon.illustration.getDrawableIl
 import app.valorizze.design.presenter.components.textfield.default.TextFieldUI
 import app.valorizze.design.presenter.theme.ColorScheme
 import app.valorizze.design.presenter.theme.HelloTheme
-import app.valorizze.design.provider.preview.LightDarkModePreviewProvider
 import kotlinx.coroutines.launch
 import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
@@ -179,12 +176,10 @@ fun RecoverCodeContent(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-private fun RecoverCodePreview(
-    @PreviewParameter(LightDarkModePreviewProvider::class) type: ThemeType
-) {
-    HelloTheme(themeType = type) {
+private fun RecoverCodePreview() {
+    HelloTheme {
         RecoverCodeContent(
             state = RecoverCodeState(
                 message = "Se o email informado existir em nossa base, um código será enviado para: arley@gmail.com",

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    GenericSheetContent-->
     <string name="text_tile_generic_sheet_content">Atenção</string>
-    <string name="text_first_button_generic_sheet_content">Ok, entendi</string>
-    <string name="text_second_button_generic_sheet_content">Tentar novamente</string>
+    <string name="text_first_button_generic_sheet_content">Tentar novamente</string>
+    <string name="text_second_button_generic_sheet_content">Entendi</string>
 
     <string name="text_first_button_not_confirmed_sheet_content">Validar cadastro</string>
     <string name="text_second_button_not_confirmed_sheet_content">Agora não</string>

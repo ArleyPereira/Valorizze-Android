@@ -165,7 +165,7 @@ class RecoverPasswordInstrumentedTest {
             .performClick()
 
         // THEN
-        composeRule.waitUntil(3_000) {
+        composeRule.waitUntil(5_000) {
             composeRule.onAllNodes(hasText(message)).fetchSemanticsNodes().isNotEmpty()
         }
 

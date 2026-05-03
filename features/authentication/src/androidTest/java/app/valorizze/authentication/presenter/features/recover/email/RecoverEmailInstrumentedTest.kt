@@ -22,7 +22,6 @@ import app.valorizze.core.enums.result.ResultStatus
 import app.valorizze.domain.model.base.BaseResponse
 import app.valorizze.domain.repository.remote.confirmation.ConfirmationRepository
 import app.valorizze.domain.usecase.remote.confirmation.CreateConfirmationUseCase
-import java.util.concurrent.atomic.AtomicBoolean
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -69,7 +68,6 @@ class RecoverEmailInstrumentedTest {
 
         val email = "dev.arley.santana@gmail.com"
         val message = "Se o e-mail existir em nossa base, enviamos um código. Verifique seu e-mail."
-        val navigated = AtomicBoolean(false)
 
         fakeConfirmationRepository.createResponse = {
             BaseResponse(
@@ -99,7 +97,6 @@ class RecoverEmailInstrumentedTest {
                         nextEmail = navEmail
                         nextMessage = navMessage
                         showRecoverCode = true
-                        navigated.set(true)
                     },
                     onBackPressed = {},
                 )
@@ -114,8 +111,8 @@ class RecoverEmailInstrumentedTest {
             .performClick()
 
         // THEN
-        composeRule.waitUntil(5_000) {
-            navigated.get()
+        composeRule.waitUntil(3_000) {
+            composeRule.onAllNodes(hasText(codeLabel)).fetchSemanticsNodes().isNotEmpty()
         }
 
         composeRule.onNode(hasText(codeLabel)).assertIsDisplayed()

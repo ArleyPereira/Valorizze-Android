@@ -7,9 +7,6 @@ pluginManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
-        // CI hardening: some networks intermittently block/throttle repo.maven.apache.org.
-        // Adding repo1 as a fallback avoids build failures when that happens.
-        maven { url = uri("https://repo1.maven.org/maven2") }
         mavenCentral()
         gradlePluginPortal()
     }
@@ -21,8 +18,6 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
-        // CI hardening: see pluginManagement.repositories comment above.
-        maven { url = uri("https://repo1.maven.org/maven2") }
         mavenCentral()
     }
 }

@@ -39,7 +39,7 @@ private val currentApiEnvironmentConfig: ApiEnvironmentConfig
 
         ApiEnvironment.DEVELOPMENT -> ApiEnvironmentConfig(
             protocol = URLProtocol.HTTP,
-            host = "192.168.70.7",
+            host = "192.168.70.16",
             port = 3001
         )
     }

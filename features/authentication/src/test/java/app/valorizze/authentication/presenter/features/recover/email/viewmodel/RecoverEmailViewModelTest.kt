@@ -37,7 +37,7 @@ class RecoverEmailViewModelTest {
     }
 
     @Test
-    fun `check values initial state`() {
+    fun `initial state should be correct`() {
         // GIVEN
         val state = vm.state.value
 

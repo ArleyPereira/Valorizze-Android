@@ -70,7 +70,7 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `clicking login with empty email sets inputError EMAIL`() {
+    fun `clicking login with empty email set inputError EMAIL`() {
         runTest(mainDispatcherRule.scheduler) {
             // WHEN
             vm.dispatchAction(LoginAction.OnSignIn)
@@ -83,7 +83,7 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `clicking login with empty password sets inputError PASSWORD`() {
+    fun `clicking login with empty password set inputError PASSWORD`() {
         runTest(mainDispatcherRule.scheduler) {
             // GIVEN
             val email = "dev.arley.santana@gmail.com"
@@ -100,7 +100,7 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `successful login saves user sets success feedback and stops loading`() {
+    fun `successful login saves user set success feedback and stop loading`() {
         runTest(mainDispatcherRule.scheduler) {
             // GIVEN
             val user = User(
@@ -140,7 +140,7 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `error login sets feedback and bottom sheet and stops loading`() {
+    fun `error login set feedback and bottom sheet and stop loading`() {
         runTest(mainDispatcherRule.scheduler) {
             // GIVEN
             coEvery { loginUseCase(any()) } returns BaseResponse(

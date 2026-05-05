@@ -49,7 +49,7 @@ class RecoverCodeViewModelTest {
     }
 
     @Test
-    fun `check values initial state`() {
+    fun `initial state should be correct`() {
         // GIVEN
         val email = "dev.arley.santana@gmail.com"
         val message = "Código enviado"

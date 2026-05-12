@@ -19,12 +19,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.valorizze.authentication.R
 import app.valorizze.authentication.presenter.features.signup.create.action.SignupAction
 import app.valorizze.authentication.presenter.features.signup.create.event.SignupEvent
 import app.valorizze.authentication.presenter.features.signup.create.state.SignupState
@@ -46,9 +48,7 @@ import app.valorizze.design.presenter.components.textfield.password.TextFieldPas
 import app.valorizze.design.presenter.theme.ColorScheme
 import app.valorizze.design.presenter.theme.HelloTheme
 import kotlinx.coroutines.launch
-import androidx.compose.ui.res.stringResource
 import org.koin.androidx.compose.koinViewModel
-import app.valorizze.authentication.R
 
 @Composable
 fun SignupScreen(
@@ -73,7 +73,7 @@ fun SignupScreen(
 
     SignupContent(
         state = state,
-        action = viewModel::submitAction,
+        action = viewModel::dispatchAction,
         navigateToValidateSignupScreen = {
             navigateToValidateSignupScreen(
                 state.email,

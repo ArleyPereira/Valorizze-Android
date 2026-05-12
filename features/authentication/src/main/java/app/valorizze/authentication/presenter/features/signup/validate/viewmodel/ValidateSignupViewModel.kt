@@ -64,6 +64,10 @@ class ValidateSignupViewModel(
             is ValidateSignupAction.DismissFeedback -> {
                 dismissFeedback()
             }
+
+            is ValidateSignupAction.CreateFeedback -> {
+                createFeedback(action.feedback)
+            }
         }
     }
 
@@ -137,16 +141,12 @@ class ValidateSignupViewModel(
 
             when (response.resultStatus) {
                 ResultStatus.SUCCESS -> {
-
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            feedback = Feedback(
-                                title = response.message.orEmpty(),
-                                type = FeedbackType.SUCCESS
-                            )
+                    createFeedback(
+                        feedback = Feedback(
+                            title = response.message.orEmpty(),
+                            type = FeedbackType.SUCCESS
                         )
-                    }
+                    )
                 }
 
                 else -> setupError(response.message)
@@ -197,6 +197,12 @@ class ValidateSignupViewModel(
         }
 
         _state.update { it.copy(inputError = inputError) }
+    }
+
+    private fun createFeedback(feedback: Feedback) {
+        _state.update {
+            it.copy(isLoading = false, feedback = feedback)
+        }
     }
 
     private fun dismissFeedback() {

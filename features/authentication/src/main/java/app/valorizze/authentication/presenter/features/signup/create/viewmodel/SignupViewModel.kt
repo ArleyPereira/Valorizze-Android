@@ -37,7 +37,7 @@ class SignupViewModel(
     private var _event: Channel<SignupEvent> = Channel()
     var event = _event.receiveAsFlow()
 
-    fun submitAction(action: SignupAction) {
+    fun dispatchAction(action: SignupAction) {
         when (action) {
             is SignupAction.OnValueChange -> {
                 onValueChange(action.value, action.type)

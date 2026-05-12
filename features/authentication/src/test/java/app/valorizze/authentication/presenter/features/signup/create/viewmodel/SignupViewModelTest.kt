@@ -66,7 +66,7 @@ class SignupViewModelTest {
         val firstName = "Arley"
 
         // WHEN
-        vm.submitAction(SignupAction.OnValueChange(value = firstName, type = FIRST_NAME))
+        vm.dispatchAction(SignupAction.OnValueChange(value = firstName, type = FIRST_NAME))
 
         // THEN
         assertEquals(firstName, vm.state.value.firstName)
@@ -79,7 +79,7 @@ class SignupViewModelTest {
         val lastName = "Santana"
 
         // WHEN
-        vm.submitAction(SignupAction.OnValueChange(value = lastName, type = LAST_NAME))
+        vm.dispatchAction(SignupAction.OnValueChange(value = lastName, type = LAST_NAME))
 
         // THEN
         assertEquals(lastName, vm.state.value.lastName)
@@ -92,7 +92,7 @@ class SignupViewModelTest {
         val email = "dev.arley.santana@gmail.com"
 
         // WHEN
-        vm.submitAction(SignupAction.OnValueChange(value = email, type = EMAIL))
+        vm.dispatchAction(SignupAction.OnValueChange(value = email, type = EMAIL))
 
         // THEN
         assertEquals(email, vm.state.value.email)
@@ -105,7 +105,7 @@ class SignupViewModelTest {
         val password = "123456"
 
         // WHEN
-        vm.submitAction(SignupAction.OnValueChange(value = password, type = PASSWORD))
+        vm.dispatchAction(SignupAction.OnValueChange(value = password, type = PASSWORD))
 
         // THEN
         assertEquals(password, vm.state.value.password)
@@ -118,7 +118,7 @@ class SignupViewModelTest {
         val terms = true
 
         // WHEN
-        vm.submitAction(SignupAction.OnTermsChange)
+        vm.dispatchAction(SignupAction.OnTermsChange)
 
         // THEN
         assertEquals(terms, vm.state.value.onTermsChecked)
@@ -156,14 +156,14 @@ class SignupViewModelTest {
                 vm.event.first() as SignupEvent.Navigation.Validate
             }
 
-            vm.submitAction(SignupAction.OnValueChange(firstName, FIRST_NAME))
-            vm.submitAction(SignupAction.OnValueChange(lastName, LAST_NAME))
-            vm.submitAction(SignupAction.OnValueChange(email, EMAIL))
-            vm.submitAction(SignupAction.OnValueChange(password, PASSWORD))
-            vm.submitAction(SignupAction.OnTermsChange)
+            vm.dispatchAction(SignupAction.OnValueChange(firstName, FIRST_NAME))
+            vm.dispatchAction(SignupAction.OnValueChange(lastName, LAST_NAME))
+            vm.dispatchAction(SignupAction.OnValueChange(email, EMAIL))
+            vm.dispatchAction(SignupAction.OnValueChange(password, PASSWORD))
+            vm.dispatchAction(SignupAction.OnTermsChange)
 
             // WHEN
-            vm.submitAction(SignupAction.CreateUser)
+            vm.dispatchAction(SignupAction.CreateUser)
 
             advanceUntilIdle()
 
@@ -194,14 +194,14 @@ class SignupViewModelTest {
                 status = 400
             )
 
-            vm.submitAction(SignupAction.OnValueChange(firstName, FIRST_NAME))
-            vm.submitAction(SignupAction.OnValueChange(lastName, LAST_NAME))
-            vm.submitAction(SignupAction.OnValueChange(email, EMAIL))
-            vm.submitAction(SignupAction.OnValueChange(password, PASSWORD))
-            vm.submitAction(SignupAction.OnTermsChange)
+            vm.dispatchAction(SignupAction.OnValueChange(firstName, FIRST_NAME))
+            vm.dispatchAction(SignupAction.OnValueChange(lastName, LAST_NAME))
+            vm.dispatchAction(SignupAction.OnValueChange(email, EMAIL))
+            vm.dispatchAction(SignupAction.OnValueChange(password, PASSWORD))
+            vm.dispatchAction(SignupAction.OnTermsChange)
 
             // WHEN
-            vm.submitAction(SignupAction.CreateUser)
+            vm.dispatchAction(SignupAction.CreateUser)
 
             advanceUntilIdle()
 
